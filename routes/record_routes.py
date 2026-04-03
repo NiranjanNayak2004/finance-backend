@@ -99,15 +99,4 @@ def delete_record(id):
     db.session.delete(record)
     db.session.commit()
 
-    return jsonify({"message": "Record deleted"}).route("/records/<int:id>", methods=["DELETE"])
-@role_required(["admin"])
-def delete_record(id):
-    record = Record.query.get(id)
-
-    if not record:
-        return jsonify({"error": "Record not found"}), 404
-
-    db.session.delete(record)
-    db.session.commit()
-
     return jsonify({"message": "Record deleted"})
