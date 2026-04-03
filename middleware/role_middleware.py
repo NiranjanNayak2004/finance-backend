@@ -3,15 +3,17 @@ from flask import jsonify
 from flask_jwt_extended import verify_jwt_in_request, get_jwt, get_jwt_identity
 
 def role_required(allowed_roles):
+    """Restrict access based on user role from JWT."""
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+             # Verify JWT token
             verify_jwt_in_request()
 
-            # ✅ identity (user id)
+            # Get user identity (user id) from token
             user_id = get_jwt_identity()
 
-            # ✅ claims (extra data like role)
+           # Extract role from JWT claims
             claims = get_jwt()
             role = claims.get("role")
 
